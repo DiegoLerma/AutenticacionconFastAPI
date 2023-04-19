@@ -2,16 +2,20 @@ from fastapi import FastAPI # Importamos FastAPI, esto es para crear la instanci
 # Path se usa para validar los parámetros de la ruta
 # Query se usa para validar los parámetros de la query
 # Importamos Query, esto es para que cuando se haga una petición GET a la ruta /movies/ se valide el parámetro category
-from fastapi.responses import HTMLResponse, JSONResponse # Importamos HTMLResponse, esto es para que cuando se haga una petición GET a la ruta / se muestre un HTML
+from fastapi.responses import HTMLResponse # Importamos HTMLResponse, esto es para que cuando se haga una petición GET a la ruta / se muestre un HTML
 # Importamos JSONResponse, esto es para que cuando se haga una petición GET a la ruta /movies se muestre un JSON
 from pydantic import BaseModel # Importamos BaseModel, esto es para que cuando se haga una petición POST a la ruta /movies se valide el body de la petición
-from utils.jwt_manager import create_token # Importamos create_token, esto es para que cuando se haga una petición POST a la ruta /login se ejecute la función login
 # from fastapi.security import HTTPBearer
 from config.database import Base, engine
 # from sqlmodel import Field, SQLModel, Session, engine
 from middlewares.error_handler import ErrorHandler
 from routers.movie import movie_router
 from routers.user import user_router
+import os
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port = int(os.environ.get("PORT", 8000)), reload=True)
 
 app = FastAPI() # Creamos una instancia de FastAPI
 app.title = "Autenticador" # Asignamos un título a la instancia de FastAPI
